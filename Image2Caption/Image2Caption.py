@@ -38,6 +38,12 @@ def encode_image(image):
 client = OpenAI(api_key = OPEN_AI_API_KEY)
 
 def generateImageCaption(base64_image):
+    ques = f"""
+Describe the image in minimum number of tokens, max {MAX_TOKENS_TO_GENERATE} tokens allowed. 
+Try to include differnt possible aspect of image such as Subject, Action, Products, Brands, Location.
+Make result descriptive, meaningful and use simple language.
+Focus on main subject.
+"""
     try:
         response = client.chat.completions.create(
             model=IMAGE2TEXTMODEL,
@@ -47,7 +53,7 @@ def generateImageCaption(base64_image):
                 "content": [
                     {
                         "type": "text", 
-                        "text": "Describe the image in atmost 50 tokens. Make sure to complete the description. Give me whole context of image with different elements into it"
+                        "text": ques,
                     },
                     {
                     "type": "image_url",
@@ -58,7 +64,7 @@ def generateImageCaption(base64_image):
                 ],
                 }
             ],
-            max_tokens=50,
+            max_tokens=MAX_TOKENS_TO_GENERATE+10,
         )
         return response.choices[0].message.content
     except:
