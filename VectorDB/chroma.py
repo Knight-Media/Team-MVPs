@@ -58,6 +58,6 @@ class vectordb:
         result = self.collection.query(
             query_embeddings = embedding
         )
-
+        
         return (result['documents'][0][0], result["metadatas"][0][0])
     

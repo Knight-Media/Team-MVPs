@@ -1,6 +1,7 @@
 import os
 import sys
 import random
+import time
 
 module_path = './VectorDB'
 if module_path not in sys.path:
@@ -28,9 +29,12 @@ def register_images(path: str):
             register_images(full_path)
         else:
             i = i+1
-            if(i<2):  
-                caption = Image2Caption.getImageCaption(full_path)
-                vector.add_embeddings(str(random.getrandbits(128)), caption, full_path)
+            if(i<50):
+                time.sleep(5)
+                print('task done: ', i)
+                if full_path.count(".DS_Store") == 0:
+                    caption = Image2Caption.getImageCaption(full_path)
+                    vector.add_embeddings(str(random.getrandbits(128)), caption, full_path)
                 
 register_images(r"/Users/manoj.kuma/Project/Media-Hackathon/Team-MVPs/DataSet")
 print(i)
