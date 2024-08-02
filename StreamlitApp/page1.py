@@ -24,7 +24,7 @@ def getImage(source):
 # Define a function for each page
 def page1():
     
-    st.write("### "+'Ads Campaign UseCase')
+    st.write("### "+'Ads Campaign Manager')
     
     add_prompt_box = st.text_input(
         "Search Image", key="imageSearch",
