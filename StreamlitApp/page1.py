@@ -22,31 +22,26 @@ def getImage(source):
         print(f"Error in get_image...take action \n Error: {e}")
 
 # Define a function for each page
-def page1():
+def page1(session_state):
     
-    st.write("### "+'Ads Campaign Manager')
+    api = "http://172.16.174.76:8000/query/"
+    query_link = api + session_state.imageSearch
     
-    add_prompt_box = st.text_input(
-        "Search Image", key="imageSearch",
-        value = 'Best Hotels near me'
-    )
-
-    submit = st.empty()
-    submit = st.button('Search Image', key='searchImageButton')
-    if submit:
-        api = "http://172.16.174.76:8000/query/"
-        query_link = api + st.session_state.imageSearch
-        try:
-            response = requests.get(query_link)
-            # print(response.text)
-            # st.write(response.json()[1]['path'])
-        except:
-            st.error("Error in initial API call")
-            
-        image = getImage(response.json()[1]['path'])
+    if session_state.search_type == "Search and Generate":
+        query_link = query_link + "/1"
+    st.write(api)
+    st.write(query_link)
+    try:
+        response = requests.get(query_link)
+        print(response.text)
+        st.write(response.json())
+    except:
+        st.error("Error in initial API call")
         
-        st.image(image,caption='Search Image', width =1028, output_format='auto')
-        st.write(f'{response.json()[0]}')
+    # image = getImage(response.json()[1]['path'])
+    
+    # st.image(image,caption='Search Image', width =1028, output_format='auto')
+    # st.write(f'{response.json()[0]}')
     
     
     

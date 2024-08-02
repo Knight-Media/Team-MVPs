@@ -10,13 +10,35 @@ from page2 import *
 
 # Heading
 st.markdown("<h1 style='text-align: center;'>PicQuest</h1>", unsafe_allow_html=True)
+st.write("### "+'Ads Campaign Manager')
+
+# Add image generation process
+model_type = st.selectbox(
+    'Select to Generate Image or not',
+    ('Search Only', 'Search and Generate'),
+    key='search_type'
+)
 
 def main():
-    # Create columns for navigation buttons
-    col1, col2 = st.columns([1, 1])
+    add_prompt_box = st.text_input(
+        "Search Image", key="imageSearch",
+        value = 'Best Hotels near me'
+    )
     
-    page1()
-    # Initialize session state for page if not already done
+    submit = st.empty()
+    submit = st.button('Search Image', key='searchImageButton')
+    if submit:
+        page1(st.session_state)
+    
+    
+
+# Run the app
+if __name__ == "__main__":
+    main()
+
+
+
+# Initialize session state for page if not already done
     # if "page" not in st.session_state:
     #     st.session_state.page = "Page 1"  # Default to Page 1
 
@@ -32,7 +54,3 @@ def main():
     #     page1()
     # elif st.session_state.page == "Page 2":
     #     page2()
-
-# Run the app
-if __name__ == "__main__":
-    main()
